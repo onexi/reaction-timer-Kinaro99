@@ -11,8 +11,8 @@
   </style>
 </head>
 <body>
-  <h1> reaction timer </h1>
-  <button id="reactionBtn"> Start Test </button> <!-- Reaction timer button -->
+  <h1> Reaction Timer </h1>
+  <button id="reactionBtn"> Start Test </button> <!-- Reaction timer button --> //doublecheck sizing for button
   <p id="message"></p> <!-- Display reaction time messages -->
   <script>
     let startTime;
@@ -22,17 +22,17 @@
 
     // Event listener for button click
     button.addEventListener("click", async () => {
-      if (button.textContent === "Start Test") {
-        message.textContent = "Wait for the color change...";
+      if (button.textContent === "Click here to start the test") {
+        message.textContent = "Wait for button to change to orange";
         button.style.backgroundColor = "pink";
 
         let response = await fetch("/start");
         let data = await response.json();
 
         setTimeout(() => {
-          button.style.backgroundColor = "blue";
-          button.textContent = "Click Here!";
-          startTime = Date.now(); // Record time when color changes
+          button.style.backgroundColor = "orange";
+          button.textContent = "Click here now!!!";
+          startTime = Date.now(); // Record time when color changes!! diff of when colour changes and time clicks
         }, data.startTime - Date.now());
 
       } else {

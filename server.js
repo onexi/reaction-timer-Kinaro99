@@ -16,9 +16,9 @@ let bestTimes = [];
  * Returns a JSON object containing the start time and sends that.
  */
 app.get('/start', (req, res) => {
-  const delay = Math.floor(Math.random() * 20000) + 1000; // Random delay between 1-20 sec
-  const startTime = Date.now() + delay; // Calculate start time after the delay
-  res.json({ startTime }); // Send start time to client
+  const delay = Math.floor(Math.random() * 20000) + 1000;
+  const startTime = Date.now() + delay; 
+  res.json({ startTime }); 
 });
 
 /**
@@ -26,13 +26,13 @@ app.get('/start', (req, res) => {
  */
 app.post('/submit', (req, res) => {
   const { reactionTime, sessionId } = req.body;
-  if (!reactionTime || !sessionId) return res.status(400).json({ error: 'Error' });
+  if (!reactionTime || !sessionId) return res.status(400).json({ error: 'Error, Try Again' });
 
   if (!bestTimes[sessionId] || reactionTime < bestTimes[sessionId]) {
     bestTimes[sessionId] = reactionTime;
   }
 
-  res.json({ bestTime: bestTimes[sessionId] }); // Send updated best time to client
+  res.json({ bestTime: bestTimes[sessionId] }); // Send updated best time to screen
 });
 
 // Define the port (default to 3000 if not specified).
