@@ -25,7 +25,7 @@
     const message = document.getElementById("message");
 
     startBtn.addEventListener("click", async () => {
-      message.textContent = "Wait for the button to change color";
+      message.textContent = "Wait for blue button text to turn black!";
       startBtn.disabled = true;
       stopBtn.disabled = true;
 
@@ -34,7 +34,7 @@
 
       setTimeout(() => {
         stopBtn.disabled = false;
-        message.textContent = "Click Stop Now!";
+        message.textContent = "Click stop test now!";
         startTime = Date.now();
       }, data.startTime - Date.now());
     });
