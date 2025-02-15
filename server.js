@@ -8,35 +8,31 @@ app.use(express.json());
 // Serve static files (HTML, CSS, client-side JavaScript) from the "public" directory.
 app.use(express.static('public'));
 
-// In-memory storage for messages
-let messages = [];
+// In-memory storage
+let bestTimes = [];
 
 /**
- * GET /messages
- * Returns a JSON object containing all messages.
+ * GET /timer
+ * Returns a JSON object containing the start time and sends that.
  */
-app.get('/messages', (req, res) => {
-  res.json({ messages });
+app.get('/start', (req, res) => {
+  const delay = Math.floor(Math.random() * 20000) + 1000;
+  const startTime = Date.now() + delay; 
+  res.json({ startTime }); 
 });
 
 /**
- * POST /messages
- * Expects a JSON payload with "username" and "message".
- * Adds the new message to the messages array.
+ * POST /timer; gets and updates reaction time if better
  */
-app.post('/messages', (req, res) => {
-  const { username, message } = req.body;
-  if (!username || !message) {
-    return res.status(400).json({ error: 'Both username and message are required.' });
+app.post('/submit', (req, res) => {
+  const { reactionTime, sessionId } = req.body;
+  if (!reactionTime || !sessionId) return res.status(400).json({ error: 'Error, Try Again' });
+
+  if (!bestTimes[sessionId] || reactionTime < bestTimes[sessionId]) {
+    bestTimes[sessionId] = reactionTime;
   }
-  // Optionally, include a timestamp for each message.
-  const newMessage = {
-    username,
-    message,
-    timestamp: Date.now()
-  };
-  messages.push(newMessage);
-  res.status(201).json({ success: true });
+
+  res.json({ bestTime: bestTimes[sessionId] }); // Send updated best time to screen
 });
 
 // Define the port (default to 3000 if not specified).
