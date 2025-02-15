@@ -1,6 +1,5 @@
 // server.js
 const express = require('express');
-const path = require('path');
 const app = express();
 
 // Use express.json() middleware to parse JSON bodies.
@@ -20,11 +19,6 @@ app.get('/start', (req, res) => {
   const delay = Math.floor(Math.random() * 20000) + 1000; // Random delay between 1-20 sec
   const startTime = Date.now() + delay; // Calculate start time after the delay
   res.json({ startTime }); // Send start time to client
-});
-
-// Route to serve the index.html file
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 /**
